@@ -8,7 +8,7 @@ head(birdsong_1)
 head(birdsong_1)
 # combine the data
 data <- rbind(birdsong_1, birdsong_2)
-# check dafa
+# check data
 head(data)
 # clean up data; get rid of durations that are too short to be songs 
 new_data<- data[400 < data$motif_duration,]
