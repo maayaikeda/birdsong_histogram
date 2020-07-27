@@ -27,7 +27,7 @@ p <- p + theme_classic()
 p <- p + ylab("Count")
 p
 
-# It seems like directed songs are shorter in length than undirected songs
+# It seems like songs recorded while females are calling are shorter in length thansongs while males are singing alone
 # so combine the birds and normalize it to their undirected (alone) mean. 
 # (substract all points from undirected mean)
 
