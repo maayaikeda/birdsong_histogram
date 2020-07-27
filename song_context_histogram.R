@@ -93,9 +93,9 @@ p
 # Plot to see how it looks for each bird.
 
 # It is known from previous studies that directed songs are shorter than undirected songs. 
-# I think we can assume that "Male singing alone" is "undirected" song 
+# For O375, "Male singing alone" is definately "undirected" song 
 # and "Mate responding to song" is actually is a female call contaminated recording.
-# So relabel them. 
+# So relabel so that that context description is more accurate.
 
 new_data[,"contexts"] <- NA
 for (r in rows){
