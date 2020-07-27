@@ -134,8 +134,8 @@ p <- p + theme_classic()
 p
 
 
-# Conclusion, for both birds, "directed" songs or when the song files are contaminated with female
-# calls, the songs are faster.
-# Maybe looking at female call contamination in files is a way to find "directed" songs.
+# In conclusion, for both birds, when the song files are contaminated with female calls, the songs are faster.
+# Maybe they are "directed" songs
+# Looking at female call contamination in files can be a new way to find "directed" songs.
 
 
