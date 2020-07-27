@@ -100,11 +100,11 @@ p
 new_data[,"contexts"] <- NA
 for (r in rows){
   if (new_data$birdID[r] == "G544" && new_data$context2[r] == "Male singing alone"){
-    new_data$contexts[r] <- "Undirected G544"
+    new_data$contexts[r] <- "No female calls G544"
   } else if (new_data$birdID[r] == "G544" && new_data$context2[r] == "Mate responding to song"){
-    new_data$contexts[r] <- "Female call contaminated recording G544"
+    new_data$contexts[r] <- "Female calls in recording G544"
   } else if (new_data$birdID[r] == "O375" && new_data$context2[r] == "Mate responding to song"){
-    new_data$contexts[r] <- "Female call contaminated recording O375"
+    new_data$contexts[r] <- "Female calls in recording O375"
   } else { 
     new_data$contexts[r] <- "Undirected O375"
   }
@@ -122,11 +122,11 @@ p <- p + geom_histogram(aes(y=..density..), position="identity", alpha=0.5)
 p <- p + geom_density(alpha=0.5)
 p <- p + geom_vline(data=df2, aes(xintercept=diff_frm_mean, color=contexts),linetype="dashed")
 p <- p + scale_color_manual(values = c("pink3", "pink1", "darkseagreen3", "darkseagreen1"), name = "Context/Bird",
-                            breaks = c("Female call contaminated recording G544", "Undirected G544", "Female call contaminated recording O375", "Undirected O375"),
-                            labels = c("Contaminated recording G544", "Undirected G544", "Contaminated recording O375", "Undirected O375"))
+                            breaks = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"),
+                            labels = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"))
 p <- p + scale_fill_manual(values = c("pink3", "pink1", "darkseagreen3", "darkseagreen1"), name = "Context/Bird",
-                            breaks = c("Female call contaminated recording G544", "Undirected G544", "Female call contaminated recording O375", "Undirected O375"),
-                            labels = c("Contaminated recording G544", "Undirected G544","Contaminated recording O375", "Undirected O375"))
+                            breaks = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"),
+                            labels = c("Female calls in recording G544", "No female calls G544","Female calls in recording O375", "Undirected O375"))
 p <- p + labs(title="Undirected vs Directed in birds G544 and O375", y = "Density", x="Motif length difference from directed mean")
 p <- p + annotate("segment", x = 0, y = 0, xend = 0, yend =0.065 )
 p <- p + annotate("text", x = 5,y = 0.07, label = "Undirected mean" )
@@ -134,8 +134,7 @@ p <- p + theme_classic()
 p
 
 
-# In conclusion, for both birds, when the song files are contaminated with female calls, the songs are faster.
-# Maybe they are "directed" songs
-# Looking at female call contamination in files can be a new way to find "directed" songs.
-
+# Conclusion, for both birds, "directed" songs or when the song files are contaminated with female
+# calls, the songs are faster.
+# Maybe looking at female call contamination in files is a way to find "directed" songs.
 
