@@ -1,5 +1,6 @@
 # import readxl to read excel sheets
 library(readxl)
+library(ggplot2)
 # import data from different birds
 birdsong_1 <- read_excel("~/Documents/Home 2020/birdsong_1.xlsx")
 birdsong_2 <- read_excel("~/Documents/Home 2020/birdsong_2.xls")
