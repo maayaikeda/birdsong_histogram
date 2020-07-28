@@ -10,4 +10,4 @@ Bird 2 was recorded either alone (no one else in the cage) or with a female. For
 
 The analysis shows that when (male) birds are singing alone or to himself, the songs are longer/slower than when they are singing while the female birds are making calls. It is known that female-directed songs are shorter/faster than undirected song. This current analysis suggest that when males are singing over the female calls, they are singing directed songs. 
 
-[link to Google!](http://google.com)
+[Link to analhysis](https://github.com/maayaikeda/birdsong_histogram/blob/master/Birdsong_analysis.md)
