@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1595954947122.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8FB3EF4F",
+    "lastKnownWriteTime" : 1595955098,
+    "last_content_update" : 1595955098526,
+    "path" : "~/birdsong_histogram/song_context_histogram.R",
+    "project_path" : "song_context_histogram.R",
+    "properties" : {
+        "cursorPosition" : "8,16",
+        "notebook_format" : "html_document",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
