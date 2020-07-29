@@ -2,7 +2,7 @@ Birdsong analysis
 ================
 
 This is an analysis of songs recorded from two zebra finches. Zebra
-finche males sing to their mates during courtship. Previous studies have
+ males sing to their mates during courtship. Previous studies have
 found that males sing shorter (faster) songs to their mates (called
 Directed song) than they are practicing alone (Undirected songs).
 
@@ -48,7 +48,7 @@ birdsong2_filtered<- birdsong_2[400 < birdsong_2$motif_duration,]
 
 ## Preparing data/preliminary plot for Bird \#2
 
-For bird2 (O375), songs were recorded when he was with his mate and
+For bird2 (O375), the data file only contains songs that were recorded when he was with his mate and
 offspring, so some song audio files contain his mate’s calls and his
 offsprings begging. I expect offspring begging to not make a difference.
 
