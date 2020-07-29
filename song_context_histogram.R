@@ -94,13 +94,19 @@ p <- p + geom_density(alpha=0.5)
 p <- p + geom_vline(data=mu2, aes(xintercept=grp.mean, color=context2),linetype="dashed")
 p <- p + scale_color_manual(values=c("pink3", "darkseagreen3"),name="Experimental\nCondition",
                             breaks=c("Male singing alone", "Mate responding to song"),
-                     labels=c("Undirected", "Directed"))
+                            labels=c("Suspected Undirected", "Suspected Directed"))
 p <- p + scale_fill_manual(values=c("pink3", "darkseagreen3"),name="Experimental\nCondition",
-                    breaks=c("Male singing alone", "Mate responding to song"),
-                    labels=c("Undirected", "Directed"))
+                           breaks=c("Male singing alone", "Mate responding to song"),
+                           labels=c("Suspected Undirected", "Suspected Directed"))
 p <- p + labs(title="Motif Length", y = "Density", x="Motif length difference from directed mean")
 p <- p + theme_classic()
 p
+#--
+# Run statistics
+S_Undirected <- subset[(new_data == "Male singing alone")
+S_Directed <-subset(new_data == "Mate responding to song")
+
+t.test(S_Undirected,S_Directed)
 
 # Plot to see how it looks for each bird.
 

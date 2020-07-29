@@ -174,6 +174,19 @@ p
 
 Overall, for grouped data, the "undirected" songs (songs while male singing alone)
 
+## Run t-test
+```{r ttest}
+S_Undirected <- subset(new_data == "Male singing alone")
+S_Directed <-subset(new_data == "Mate responding to song")
+
+t.test(S_Undirected,S_Directed)
+
+```
+
+
+
+
+
 ## Plot by bird
 
 Plot by bird to see if this is the the case for ungrouped data.
@@ -224,7 +237,17 @@ p <- p + annotate("text", x = 5,y = 0.07, label = "Undirected mean" )
 p <- p + theme_classic()
 p
 ```
+## Run stats by bird
+```{r birdstats}
+# Run anova
+anov <- aov(new_data$diff_frm_mean ~ new_data$contexts)
+# output summary
+summary(anov)
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
 
+As expected, songs with and without female calls in the background are significantly different in duration.
 
 ## Conclusion
 

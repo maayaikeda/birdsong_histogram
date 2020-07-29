@@ -212,6 +212,27 @@ p
 Overall, for grouped data, the “undirected” songs (songs while male
 singing alone)
 
+## Run t-test
+
+``` r
+S_Undirected <- subset(new_data == "Male singing alone")
+S_Directed <-subset(new_data == "Mate responding to song")
+
+t.test(S_Undirected,S_Directed)
+```
+
+    ## 
+    ##  Welch Two Sample t-test
+    ## 
+    ## data:  S_Undirected and S_Directed
+    ## t = 27.421, df = 43996, p-value < 2.2e-16
+    ## alternative hypothesis: true difference in means is not equal to 0
+    ## 95 percent confidence interval:
+    ##  0.02899953 0.03346429
+    ## sample estimates:
+    ##   mean of x   mean of y 
+    ## 0.037630641 0.006398732
+
 ## Plot by bird
 
 Plot by bird to see if this is the the case for ungrouped data. But
@@ -270,7 +291,64 @@ p
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](Birdsong_analysis_files/figure-gfm/plotbybird-1.png)<!-- -->
+![](Birdsong_analysis_files/figure-gfm/plotbybird-1.png)<!-- --> \#\#
+Run stats by bird
+
+``` r
+# Run anova
+anov <- aov(new_data$diff_frm_mean ~ new_data$contexts)
+# output summary
+summary(anov)
+```
+
+    ##                     Df Sum Sq Mean Sq F value Pr(>F)    
+    ## new_data$contexts    3  21162    7054   57.27 <2e-16 ***
+    ## Residuals         1216 149788     123                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
+
+    ##   Tukey multiple comparisons of means
+    ##     95% family-wise confidence level
+    ## 
+    ## Fit: aov(formula = new_data$diff_frm_mean ~ new_data$contexts)
+    ## 
+    ## $`new_data$contexts`
+    ##                                                                       diff
+    ## Female calls in recording O375-Female calls in recording G544 5.593083e+00
+    ## Male singing alone O375-Female calls in recording G544        1.501011e+01
+    ## Undirected G544-Female calls in recording G544                1.501011e+01
+    ## Male singing alone O375-Female calls in recording O375        9.417028e+00
+    ## Undirected G544-Female calls in recording O375                9.417028e+00
+    ## Undirected G544-Male singing alone O375                       4.726990e-13
+    ##                                                                      lwr
+    ## Female calls in recording O375-Female calls in recording G544  0.9346463
+    ## Male singing alone O375-Female calls in recording G544        10.8260244
+    ## Undirected G544-Female calls in recording G544                 9.7223728
+    ## Male singing alone O375-Female calls in recording O375         6.9813153
+    ## Undirected G544-Female calls in recording O375                 5.3690297
+    ## Undirected G544-Male singing alone O375                       -3.4916809
+    ##                                                                     upr
+    ## Female calls in recording O375-Female calls in recording G544 10.251520
+    ## Male singing alone O375-Female calls in recording G544        19.194197
+    ## Undirected G544-Female calls in recording G544                20.297849
+    ## Male singing alone O375-Female calls in recording O375        11.852740
+    ## Undirected G544-Female calls in recording O375                13.465026
+    ## Undirected G544-Male singing alone O375                        3.491681
+    ##                                                                   p adj
+    ## Female calls in recording O375-Female calls in recording G544 0.0110487
+    ## Male singing alone O375-Female calls in recording G544        0.0000000
+    ## Undirected G544-Female calls in recording G544                0.0000000
+    ## Male singing alone O375-Female calls in recording O375        0.0000000
+    ## Undirected G544-Female calls in recording O375                0.0000000
+    ## Undirected G544-Male singing alone O375                       1.0000000
+
+As expected, songs with and without female calls in the background are
+significantly different in duration.
 
 ## Conclusion
 
