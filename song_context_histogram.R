@@ -14,6 +14,16 @@ head(data)
 # clean up data; get rid of durations that are too short to be songs 
 new_data<- data[400 < data$motif_duration,]
 
+birdsong2_filtered<- birdsong_2[400 < birdsong_2$motif_duration,]
+p <- ggplot(birdsong2_filtered, aes(motif_duration,fill=context2, color=birdID)) + geom_histogram(binwidth = 2, , alpha = 0.5, position = "identity") + ggtitle("Motif duration: context")+ xlab("Motif duration") +labs(fill = "Sounds in Recording")
+p <- p + scale_fill_brewer(palette="Set2")
+# get rid of grid
+p <- p + theme_classic()
+# label y axis
+p <- p + ylab("Count")
+p
+
+
 # Songs while young are begging can be considered "undirected song" 
 # so relabel them as male singing alone
 new_data[new_data == "alone"]<-"Male singing alone"
@@ -45,6 +55,7 @@ library(Rmisc)
 df1 <- summarySE(new_data, measurevar = "motif_duration", groupvars=c("birdID", "context2"))
 # Take a look at df1
 df1
+
 # Extract means for undirected (alone) songs
 G544undir_mean <- df1[1, 4]
 O375undir_mean <- df1[3, 4]
@@ -101,13 +112,13 @@ p
 new_data[,"contexts"] <- NA
 for (r in rows){
   if (new_data$birdID[r] == "G544" && new_data$context2[r] == "Male singing alone"){
-    new_data$contexts[r] <- "No female calls G544"
+    new_data$contexts[r] <- "Undirected G544"
   } else if (new_data$birdID[r] == "G544" && new_data$context2[r] == "Mate responding to song"){
     new_data$contexts[r] <- "Female calls in recording G544"
   } else if (new_data$birdID[r] == "O375" && new_data$context2[r] == "Mate responding to song"){
     new_data$contexts[r] <- "Female calls in recording O375"
   } else { 
-    new_data$contexts[r] <- "Undirected O375"
+    new_data$contexts[r] <- "Male singing alone O375"
   }
 }
 
@@ -123,11 +134,11 @@ p <- p + geom_histogram(aes(y=..density..), position="identity", alpha=0.5)
 p <- p + geom_density(alpha=0.5)
 p <- p + geom_vline(data=df2, aes(xintercept=diff_frm_mean, color=contexts),linetype="dashed")
 p <- p + scale_color_manual(values = c("pink3", "pink1", "darkseagreen3", "darkseagreen1"), name = "Context/Bird",
-                            breaks = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"),
-                            labels = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"))
+                            breaks = c("Female calls in recording G544", "Undirected G544", "Female calls in recording O375", "Male singing alone O375"),
+                            labels = c("Female calls in recording G544", "Undirected G544", "Female calls in recording O375", "Male singing alone O375"))
 p <- p + scale_fill_manual(values = c("pink3", "pink1", "darkseagreen3", "darkseagreen1"), name = "Context/Bird",
-                            breaks = c("Female calls in recording G544", "No female calls G544", "Female calls in recording O375", "Undirected O375"),
-                            labels = c("Female calls in recording G544", "No female calls G544","Female calls in recording O375", "Undirected O375"))
+                            breaks = c("Female calls in recording G544", "Undirected G544", "Female calls in recording O375", "Male singing alone O375"),
+                            labels = c("Female calls in recording G544", "Undirected G544","Female calls in recording O375", "Male singing alone O375"))
 p <- p + labs(title="Undirected vs Directed in birds G544 and O375", y = "Density", x="Motif length difference from directed mean")
 p <- p + annotate("segment", x = 0, y = 0, xend = 0, yend =0.065 )
 p <- p + annotate("text", x = 5,y = 0.07, label = "Undirected mean" )
