@@ -2,7 +2,7 @@ Birdsong analysis
 ================
 
 This is an analysis of songs recorded from two zebra finches. Zebra
- males sing to their mates during courtship. Previous studies have
+finche males sing to their mates during courtship. Previous studies have
 found that males sing shorter (faster) songs to their mates (called
 Directed song) than they are practicing alone (Undirected songs).
 
@@ -48,7 +48,7 @@ birdsong2_filtered<- birdsong_2[400 < birdsong_2$motif_duration,]
 
 ## Preparing data/preliminary plot for Bird \#2
 
-For bird2 (O375), the data file only contains songs that were recorded when he was with his mate and
+For bird2 (O375), songs were recorded when he was with his mate and
 offspring, so some song audio files contain his mate’s calls and his
 offsprings begging. I expect offspring begging to not make a difference.
 
@@ -362,3 +362,114 @@ significantly different in duration.
 This suggest that we presence of female call contamination could be a
 way to sort undirected vs. directed songs when visual analysis of
 behavior cannot be done.
+
+## Using Machine learning algorithm
+
+Using Machine learning algorithm to see how different are the songs
+during different contexts for each bird.
+
+``` r
+library(caret)
+library(e1071)
+birdsong1 <- subset(new_data, birdID == "G544")
+index <- createDataPartition(birdsong1$contexts, p=0.75, list=FALSE)
+
+# the data needs to be in a data frame or it wont work
+birdsong1 <- as.data.frame(birdsong1)
+
+# convert contexts column to factor
+birdsong1$contexts <- as.factor(birdsong1$contexts)
+
+data.training <- birdsong1[index,c(2:16,27,28)]
+data.test <- birdsong1[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+```
+
+Using KNN model to start.
+
+``` r
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions,resultstest)
+```
+
+    ## Confusion Matrix and Statistics
+    ## 
+    ##                                 Reference
+    ## Prediction                       Female calls in recording G544 Undirected G544
+    ##   Female calls in recording G544                              7               0
+    ##   Undirected G544                                             5              18
+    ##                                                         
+    ##                Accuracy : 0.8333                        
+    ##                  95% CI : (0.6528, 0.9436)              
+    ##     No Information Rate : 0.6                           
+    ##     P-Value [Acc > NIR] : 0.005659                      
+    ##                                                         
+    ##                   Kappa : 0.6269                        
+    ##                                                         
+    ##  Mcnemar's Test P-Value : 0.073638                      
+    ##                                                         
+    ##             Sensitivity : 0.5833                        
+    ##             Specificity : 1.0000                        
+    ##          Pos Pred Value : 1.0000                        
+    ##          Neg Pred Value : 0.7826                        
+    ##              Prevalence : 0.4000                        
+    ##          Detection Rate : 0.2333                        
+    ##    Detection Prevalence : 0.2333                        
+    ##       Balanced Accuracy : 0.7917                        
+    ##                                                         
+    ##        'Positive' Class : Female calls in recording G544
+    ## 
+
+Looking at which variables contributed the most. We expect motif
+duration to be ranked high.
+
+``` r
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+```
+
+    ## ROC curve variable importance
+    ## 
+    ##                    Importance
+    ## start                  0.9329
+    ## motif_duration         0.9142
+    ## diff_frm_mean          0.9142
+    ## mean_entropy           0.6837
+    ## mean_pitch             0.5886
+    ## var_FM                 0.5708
+    ## mean_pitchgoodness     0.5588
+    ## mean_freq              0.5501
+    ## var_mean_freq          0.5380
+    ## var_pitch              0.5380
+    ## var_AM                 0.5360
+    ## mean_amplitude         0.5338
+    ## var_entropy            0.5250
+    ## mean_AM2               0.5225
+    ## var_pitch_goodness     0.5150
+    ## mean_FM                0.5148
+
+As expected, motif duration is the most important variable other than
+start time. Start time can be ignored because the predicted directed and
+indirect recordings were done on a different day.
+
+## Plot data
+
+Plot data to see how well the top two variables separate out the two
+contexts.
+
+``` r
+# plot scatter
+
+p <- ggplot(birdsong1, aes(x = motif_duration, y = mean_entropy, color=contexts))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+```
+
+![](Birdsong_analysis_files/figure-gfm/scatterplot-1.png)<!-- -->

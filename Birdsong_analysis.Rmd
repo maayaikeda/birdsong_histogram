@@ -256,3 +256,71 @@ As expected, songs with and without female calls in the background are significa
 
 This suggest that we presence of female call contamination could be a way to sort undirected vs. directed songs when visual analysis of behavior cannot be done. 
 
+## Using Machine learning algorithm
+
+
+Using Machine learning algorithm to see how different are the songs during different contexts for each bird. 
+
+```{r dataforknn}
+library(caret)
+library(e1071)
+birdsong1 <- subset(new_data, birdID == "G544")
+index <- createDataPartition(birdsong1$contexts, p=0.75, list=FALSE)
+
+# the data needs to be in a data frame or it wont work
+birdsong1 <- as.data.frame(birdsong1)
+
+# convert contexts column to factor
+birdsong1$contexts <- as.factor(birdsong1$contexts)
+
+data.training <- birdsong1[index,c(2:16,27,28)]
+data.test <- birdsong1[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+```
+
+Using KNN model to start.
+
+```{r knnmodel}
+
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions,resultstest)
+
+
+```
+
+
+Looking at which variables contributed the most. We expect motif duration to be ranked high.
+
+```{r importance}
+
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+```
+
+As expected, motif duration is the most important variable other than start time. Start time can be ignored because the predicted directed and indirect recordings were done on a different day. 
+
+## Plot data
+
+
+Plot data to see how well the top two variables separate out the two contexts.
+```{r scatterplot}
+
+
+# plot scatter
+
+p <- ggplot(birdsong1, aes(x = motif_duration, y = mean_entropy, color=contexts))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+
+```
+
+
+
+

@@ -75,6 +75,10 @@ for (r in rows){
 head(new_data$diff_frm_mean)
 head(new_data$motif_duration)
 
+anov <- aov(new_data$diff_frm_mean ~ new_data$contexts)
+summary(anov)
+TukeyHSD(anov)
+
 # Plot the data
 library(ggplot2)
 p <- ggplot(new_data, aes(diff_frm_mean,color=context2)) + geom_histogram(fill = "white",position = "dodge") + ggtitle("Motif length")
@@ -103,7 +107,7 @@ p <- p + theme_classic()
 p
 #--
 # Run statistics
-S_Undirected <- subset[(new_data == "Male singing alone")
+S_Undirected <- subset(new_data == "Male singing alone")
 S_Directed <-subset(new_data == "Mate responding to song")
 
 t.test(S_Undirected,S_Directed)
@@ -155,4 +159,148 @@ p
 # Conclusion, for both birds, "directed" songs or when the song files are contaminated with female
 # calls, the songs are faster.
 # Maybe looking at female call contamination in files is a way to find "directed" songs.
+
+
+
+# number of variables
+length(birdsong2_filtered)
+bs2.pca <- prcomp(birdsong2_filtered[,2:12])
+
+bs2.pca
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong2_filtered, colour = 'context2')
+pca.plot
+
+
+n_rows <- nrow(new_data)
+nrow(new_data)
+ncol(new_data)
+new_data[c(4,6,7), 1:4]
+set.seed(1234)
+ind <- sample(1:2, size=n_rows, replace=TRUE, prob =c(0.67, 0.33))
+new_data$diff_frm_mean[ind==2]
+head(new_data)
+data.training <- new_data[ind==1, c(2:16,27)]
+data.test <- new_data[ind==2, c(2:16,27)]
+
+data.trainlabels <-new_data$contexts[ind==1]
+head(data.trainlabels)
+
+data.testlabels <- new_data$contexts[ind==2]
+head(data.testlabels)
+
+# Build the model
+library(class)
+data_pred <- knn(train = data.training, test = data.test, cl = data.trainlabels,k=3)
+head(data_pred)
+
+data.Testlabels <- data.frame(data.testlabels)
+head(data.Testlabels)
+data_Pred <- data.frame(data_pred)
+head(data_Pred)
+
+merge <- cbind(data_Pred, data.Testlabels)
+names(merge) <- c("predicted","true")
+head(merge)
+
+# suing package "caret"
+
+
+library(caret)
+library(e1071)
+birdsong2 <- subset(new_data, birdID == "O375")
+index <- createDataPartition(birdsong2$contexts, p=0.75, list=FALSE)
+head(index)
+# the data needs to be in a data frame or it wont work
+birdsong2 <- as.data.frame(birdsong2)
+str(birdsong2)
+# convert contexts column to factor
+birdsong2$contexts <- as.factor(birdsong2$contexts)
+str(birdsong2)
+data.training <- birdsong2[index,c(2:16,27,28)]
+data.test <- birdsong2[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+head(birdsong2_filtered)
+ncol(birdsong2_filtered)
+head(data.training)
+ncol(data.training)
+nrow(data.training)
+
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn' )
+
+predictions <- predict(object = model_knn, data.test[,1:16])
+table(predictions)
+
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions, resultstest)
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+
+confusionMatrix(predictions,resultstest)
+
+
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+
+# bird 1
+library(caret)
+library(e1071)
+birdsong1 <- subset(new_data, birdID == "G544")
+index <- createDataPartition(birdsong1$contexts, p=0.75, list=FALSE)
+
+# the data needs to be in a data frame or it wont work
+birdsong1 <- as.data.frame(birdsong1)
+
+# convert contexts column to factor
+birdsong1$contexts <- as.factor(birdsong1$contexts)
+
+data.training <- birdsong1[index,c(2:16,27,28)]
+data.test <- birdsong1[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+
+
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn' )
+
+predictions <- predict(object = model_knn, data.test[,1:16])
+
+
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions, resultstest)
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+
+confusionMatrix(predictions,resultstest)
+
+
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+
+
+
+
+# plot scatter
+
+p <- ggplot(birdsong1, aes(x = motif_duration, y = mean_entropy, color=contexts))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+
+
+
+
+
+
+
 
