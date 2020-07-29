@@ -274,12 +274,12 @@ p
 
 ## Conclusion
 
-1.  For bird \#1 (G544), the songs that are sang while the mate is
-    calling is overall shorter in duration than his undirected song.
+1.  For bird \#1 (G544), the songs that he sang while his mate was
+    calling were overall shorter in duration than his undirected song.
 2.  For bird \#2 (O375), while we don’t have recordings from him while
-    he was a lone, the songs whithout the contamination of female calls
-    were longer in duration than the songs sang while his mate was
-    calling.
+    he was alone, his song recording whithout the contamination of
+    female calls were longer in duration than the songs sang while his
+    mate was calling.
 
 This suggest that we presence of female call contamination could be a
 way to sort undirected vs. directed songs when visual analysis of
