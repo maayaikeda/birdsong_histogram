@@ -303,7 +303,7 @@ importance <- varImp(model_knn, scale=FALSE)
 print(importance)
 ```
 
-As expected, motif duration is the most important variable other than start time. Start time can be ignored because the predicted directed and indirect recordings were done on a different day. 
+As expected, motif duration is the most important variable other than start time. Mean entropy is also expected to be different  between the two groups because isolated recordings are clean while recordings while females are calling are messy (less clean) by definition.
 
 ## Plot data
 
@@ -320,6 +320,78 @@ p <- p +  theme_classic()
 p
 
 ```
+
+## Repeat for Bird #2
+
+```{r dataforknnb2}
+
+birdsong2 <- subset(new_data, birdID == "O375")
+index <- createDataPartition(birdsong2$contexts, p=0.75, list=FALSE)
+
+# the data needs to be in a data frame or it wont work
+birdsong2 <- as.data.frame(birdsong2)
+
+# convert contexts column to factor
+birdsong2$contexts <- as.factor(birdsong2$contexts)
+
+data.training <- birdsong2[index,c(2:16,27,28)]
+data.test <- birdsong2[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+```
+
+Using KNN model to start.
+
+```{r knnmodelb2}
+
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions,resultstest)
+
+
+```
+
+```{r importanceb2}
+
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+```
+
+
+
+
+```{r scatterplotb2}
+
+
+# plot scatter
+
+p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+
+```
+
+
+
+Just looking at how the accuracy changes with different k values.
+
+
+```{r knnparameters}
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnFit <- train(contexts ~ ., data = data.training, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+
+#Output of kNN fit
+knnFit
+
+```
+
+
 
 
 

@@ -402,26 +402,26 @@ confusionMatrix(predictions,resultstest)
     ## 
     ##                                 Reference
     ## Prediction                       Female calls in recording G544 Undirected G544
-    ##   Female calls in recording G544                              7               0
-    ##   Undirected G544                                             5              18
+    ##   Female calls in recording G544                              8               0
+    ##   Undirected G544                                             4              18
     ##                                                         
-    ##                Accuracy : 0.8333                        
-    ##                  95% CI : (0.6528, 0.9436)              
+    ##                Accuracy : 0.8667                        
+    ##                  95% CI : (0.6928, 0.9624)              
     ##     No Information Rate : 0.6                           
-    ##     P-Value [Acc > NIR] : 0.005659                      
+    ##     P-Value [Acc > NIR] : 0.00151                       
     ##                                                         
-    ##                   Kappa : 0.6269                        
+    ##                   Kappa : 0.7059                        
     ##                                                         
-    ##  Mcnemar's Test P-Value : 0.073638                      
+    ##  Mcnemar's Test P-Value : 0.13361                       
     ##                                                         
-    ##             Sensitivity : 0.5833                        
+    ##             Sensitivity : 0.6667                        
     ##             Specificity : 1.0000                        
     ##          Pos Pred Value : 1.0000                        
-    ##          Neg Pred Value : 0.7826                        
+    ##          Neg Pred Value : 0.8182                        
     ##              Prevalence : 0.4000                        
-    ##          Detection Rate : 0.2333                        
-    ##    Detection Prevalence : 0.2333                        
-    ##       Balanced Accuracy : 0.7917                        
+    ##          Detection Rate : 0.2667                        
+    ##    Detection Prevalence : 0.2667                        
+    ##       Balanced Accuracy : 0.8333                        
     ##                                                         
     ##        'Positive' Class : Female calls in recording G544
     ## 
@@ -437,26 +437,27 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## start                  0.9329
-    ## motif_duration         0.9142
-    ## diff_frm_mean          0.9142
-    ## mean_entropy           0.6837
-    ## mean_pitch             0.5886
-    ## var_FM                 0.5708
-    ## mean_pitchgoodness     0.5588
-    ## mean_freq              0.5501
-    ## var_mean_freq          0.5380
-    ## var_pitch              0.5380
-    ## var_AM                 0.5360
-    ## mean_amplitude         0.5338
-    ## var_entropy            0.5250
-    ## mean_AM2               0.5225
-    ## var_pitch_goodness     0.5150
-    ## mean_FM                0.5148
+    ## start                  0.9364
+    ## diff_frm_mean          0.8859
+    ## motif_duration         0.8859
+    ## mean_entropy           0.6584
+    ## mean_AM2               0.5696
+    ## mean_amplitude         0.5688
+    ## var_pitch_goodness     0.5631
+    ## mean_FM                0.5603
+    ## var_FM                 0.5551
+    ## mean_pitch             0.5543
+    ## var_entropy            0.5501
+    ## var_pitch              0.5440
+    ## var_mean_freq          0.5305
+    ## var_AM                 0.5285
+    ## mean_freq              0.5110
+    ## mean_pitchgoodness     0.5050
 
 As expected, motif duration is the most important variable other than
-start time. Start time can be ignored because the predicted directed and
-indirect recordings were done on a different day.
+start time. Mean entropy is also expected to be different between the
+two groups because isolated recordings are clean while recordings while
+females are calling are messy (less clean) by definition.
 
 ## Plot data
 
@@ -473,3 +474,148 @@ p
 ```
 
 ![](Birdsong_analysis_files/figure-gfm/scatterplot-1.png)<!-- -->
+
+## Repeat for Bird \#2
+
+``` r
+birdsong2 <- subset(new_data, birdID == "O375")
+index <- createDataPartition(birdsong2$contexts, p=0.75, list=FALSE)
+
+# the data needs to be in a data frame or it wont work
+birdsong2 <- as.data.frame(birdsong2)
+
+# convert contexts column to factor
+birdsong2$contexts <- as.factor(birdsong2$contexts)
+
+data.training <- birdsong2[index,c(2:16,27,28)]
+data.test <- birdsong2[-index,c(2:16,27,28)]
+
+data.test <- as.data.frame(data.test )
+```
+
+Using KNN model to start.
+
+``` r
+# Train model
+
+model_knn <- train(data.training[,1:16], data.training$contexts, method = 'knn',preProcess=c("center", "scale") )
+predictions <- predict(object = model_knn, data.test[,1:16], type="raw")
+
+resultstest <- data.test[,17]
+confusionMatrix(predictions,resultstest)
+```
+
+    ## Confusion Matrix and Statistics
+    ## 
+    ##                                 Reference
+    ## Prediction                       Female calls in recording O375
+    ##   Female calls in recording O375                             10
+    ##   Male singing alone O375                                    30
+    ##                                 Reference
+    ## Prediction                       Male singing alone O375
+    ##   Female calls in recording O375                       6
+    ##   Male singing alone O375                            228
+    ##                                                         
+    ##                Accuracy : 0.8686                        
+    ##                  95% CI : (0.8228, 0.9063)              
+    ##     No Information Rate : 0.854                         
+    ##     P-Value [Acc > NIR] : 0.2790512                     
+    ##                                                         
+    ##                   Kappa : 0.2986                        
+    ##                                                         
+    ##  Mcnemar's Test P-Value : 0.0001264                     
+    ##                                                         
+    ##             Sensitivity : 0.25000                       
+    ##             Specificity : 0.97436                       
+    ##          Pos Pred Value : 0.62500                       
+    ##          Neg Pred Value : 0.88372                       
+    ##              Prevalence : 0.14599                       
+    ##          Detection Rate : 0.03650                       
+    ##    Detection Prevalence : 0.05839                       
+    ##       Balanced Accuracy : 0.61218                       
+    ##                                                         
+    ##        'Positive' Class : Female calls in recording O375
+    ## 
+
+``` r
+importance <- varImp(model_knn, scale=FALSE)
+print(importance)
+```
+
+    ## ROC curve variable importance
+    ## 
+    ##                    Importance
+    ## var_pitch              0.7396
+    ## mean_pitch             0.7385
+    ## mean_entropy           0.7301
+    ## diff_frm_mean          0.7254
+    ## motif_duration         0.7254
+    ## mean_freq              0.6968
+    ## mean_FM                0.6599
+    ## start                  0.6509
+    ## var_entropy            0.6435
+    ## mean_pitchgoodness     0.6236
+    ## mean_AM2               0.5905
+    ## var_FM                 0.5796
+    ## var_AM                 0.5770
+    ## mean_amplitude         0.5434
+    ## var_pitch_goodness     0.5362
+    ## var_mean_freq          0.5191
+
+``` r
+# plot scatter
+
+p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+```
+
+![](Birdsong_analysis_files/figure-gfm/scatterplotb2-1.png)<!-- -->
+
+Just looking at how the accuracy changes with different k values.
+
+``` r
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnFit <- train(contexts ~ ., data = data.training, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+
+#Output of kNN fit
+knnFit
+```
+
+    ## k-Nearest Neighbors 
+    ## 
+    ## 825 samples
+    ##  16 predictor
+    ##   2 classes: 'Female calls in recording O375', 'Male singing alone O375' 
+    ## 
+    ## Pre-processing: centered (16), scaled (16) 
+    ## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+    ## Summary of sample sizes: 742, 743, 743, 743, 743, 743, ... 
+    ## Resampling results across tuning parameters:
+    ## 
+    ##   k   Accuracy   Kappa    
+    ##    5  0.8678931  0.3166127
+    ##    7  0.8739856  0.3298714
+    ##    9  0.8752002  0.3215701
+    ##   11  0.8752050  0.3172134
+    ##   13  0.8687352  0.2639186
+    ##   15  0.8687304  0.2561074
+    ##   17  0.8719581  0.2620352
+    ##   19  0.8739760  0.2682446
+    ##   21  0.8743824  0.2663855
+    ##   23  0.8747840  0.2689027
+    ##   25  0.8755873  0.2694413
+    ##   27  0.8747744  0.2659874
+    ##   29  0.8739711  0.2595351
+    ##   31  0.8731630  0.2517275
+    ##   33  0.8691029  0.2211056
+    ##   35  0.8695143  0.2216859
+    ##   37  0.8695045  0.2211877
+    ##   39  0.8695094  0.2184148
+    ##   41  0.8699110  0.2212034
+    ##   43  0.8695045  0.2137866
+    ## 
+    ## Accuracy was used to select the optimal model using the largest value.
+    ## The final value used for the model was k = 25.

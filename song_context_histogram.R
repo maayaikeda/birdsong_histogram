@@ -298,7 +298,12 @@ p <- p +  theme_classic()
 p
 
 
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnFit <- train(contexts ~ ., data = data.training, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
 
+#Output of kNN fit
+knnFit
 
 
 
