@@ -364,6 +364,32 @@ print(importance)
 
 
 
+# Running stats to see other variables are significantly different between two contexts.
+
+Mean pitch and mean entropy are two variables that ranked high for both birds. Running statistical tests to see if these mesures are different in different contexts.
+
+# Mean pitch
+```{r birdstats2}
+# Run anova
+anov <- aov(new_data$mean_pitch ~ new_data$contexts)
+# output summary
+summary(anov)
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
+Mean pitch is differs with context for O375 but not for G544. 
+
+# Mean entropy stats
+```{r birdstats3}
+# Run anova
+anov <- aov(new_data$mean_entropy ~ new_data$contexts)
+# output summary
+summary(anov)
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
+Mean entropy is differs with context for both birds. 
+
 ```{r scatterplotb2}
 
 
@@ -402,4 +428,107 @@ ggplot(knnFit, aes(x=k, y=Accuracy)) + ylim(0,1) + theme_classic()
 ```
 
 It doesn't seem to matter which numbers we choose for neighbors.
+
+## PCA (Principal component analysis)
+
+Bird #1 (G544)
+```{r PCA1}
+
+length(birdsong1)
+bs2.pca <- prcomp(birdsong1[,2:12])
+
+
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong1, colour = 'contexts')
+pca.plot
+
+```
+
+
+
+
+
+Bird #2 (O375)
+```{r PCA}
+length(birdsong2)
+bs2.pca <- prcomp(birdsong2[,2:12])
+
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong2, colour = 'context2')
+pca.plot
+```
+
+
+## Exploring different plots
+
+
+```{r PCAbird1_2}
+library(FactoMineR)
+library(factoextra)
+new_birdsong1 <- birdsong1[,c(2:16,27:28)]
+bird1.pca <- PCA(new_birdsong1[,-17], graph = FALSE)
+
+fviz_pca_ind(bird1.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = new_birdsong1$contexts, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+             )
+
+```
+
+
+
+
+
+```{r PCAbird2_2}
+new_birdsong2 <- birdsong2[,c(2:16,27:28)]
+
+bird2.pca <- PCA(new_birdsong2[,-17], graph = FALSE)
+
+fviz_pca_ind(bird2.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = new_birdsong2$contexts, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+)
+```
+
+
+## Conclusion 2
+
+Although the songs that are recorded in different contexts are statistically different in song length, It is hard to distinguish song types by just comparing the audio parameters. 
+For more accuate analysis, we will need more recordings of actual direct songs (verified through behavioral analysis on video), which is time consuming. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -402,26 +402,26 @@ confusionMatrix(predictions,resultstest)
     ## 
     ##                                 Reference
     ## Prediction                       Female calls in recording G544 Undirected G544
-    ##   Female calls in recording G544                              8               1
-    ##   Undirected G544                                             4              17
+    ##   Female calls in recording G544                              7               0
+    ##   Undirected G544                                             5              18
     ##                                                         
     ##                Accuracy : 0.8333                        
     ##                  95% CI : (0.6528, 0.9436)              
     ##     No Information Rate : 0.6                           
     ##     P-Value [Acc > NIR] : 0.005659                      
     ##                                                         
-    ##                   Kappa : 0.6377                        
+    ##                   Kappa : 0.6269                        
     ##                                                         
-    ##  Mcnemar's Test P-Value : 0.371093                      
+    ##  Mcnemar's Test P-Value : 0.073638                      
     ##                                                         
-    ##             Sensitivity : 0.6667                        
-    ##             Specificity : 0.9444                        
-    ##          Pos Pred Value : 0.8889                        
-    ##          Neg Pred Value : 0.8095                        
+    ##             Sensitivity : 0.5833                        
+    ##             Specificity : 1.0000                        
+    ##          Pos Pred Value : 1.0000                        
+    ##          Neg Pred Value : 0.7826                        
     ##              Prevalence : 0.4000                        
-    ##          Detection Rate : 0.2667                        
-    ##    Detection Prevalence : 0.3000                        
-    ##       Balanced Accuracy : 0.8056                        
+    ##          Detection Rate : 0.2333                        
+    ##    Detection Prevalence : 0.2333                        
+    ##       Balanced Accuracy : 0.7917                        
     ##                                                         
     ##        'Positive' Class : Female calls in recording G544
     ## 
@@ -437,22 +437,22 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## start                  0.9294
-    ## motif_duration         0.8571
-    ## diff_frm_mean          0.8571
-    ## mean_entropy           0.6474
-    ## mean_FM                0.6176
-    ## mean_pitchgoodness     0.5548
-    ## mean_pitch             0.5501
-    ## mean_freq              0.5483
-    ## var_FM                 0.5410
-    ## var_pitch_goodness     0.5325
-    ## mean_AM2               0.5260
-    ## var_mean_freq          0.5218
-    ## var_pitch              0.5205
-    ## mean_amplitude         0.5150
-    ## var_entropy            0.5145
-    ## var_AM                 0.5083
+    ## start                  0.9394
+    ## motif_duration         0.8641
+    ## diff_frm_mean          0.8641
+    ## mean_entropy           0.6481
+    ## mean_pitch             0.5973
+    ## var_FM                 0.5843
+    ## mean_FM                0.5731
+    ## var_pitch_goodness     0.5686
+    ## mean_pitchgoodness     0.5395
+    ## mean_AM2               0.5335
+    ## mean_amplitude         0.5300
+    ## var_entropy            0.5300
+    ## mean_freq              0.5300
+    ## var_AM                 0.5265
+    ## var_pitch              0.5245
+    ## var_mean_freq          0.5070
 
 As expected, motif duration is the most important variable other than
 start time. Mean entropy is also expected to be different between the
@@ -509,30 +509,30 @@ confusionMatrix(predictions,resultstest)
     ## 
     ##                                 Reference
     ## Prediction                       Female calls in recording O375
-    ##   Female calls in recording O375                             10
-    ##   Male singing alone O375                                    30
+    ##   Female calls in recording O375                              8
+    ##   Male singing alone O375                                    32
     ##                                 Reference
     ## Prediction                       Male singing alone O375
-    ##   Female calls in recording O375                       3
-    ##   Male singing alone O375                            231
+    ##   Female calls in recording O375                       2
+    ##   Male singing alone O375                            232
     ##                                                         
-    ##                Accuracy : 0.8796                        
-    ##                  95% CI : (0.835, 0.9156)               
+    ##                Accuracy : 0.8759                        
+    ##                  95% CI : (0.8309, 0.9125)              
     ##     No Information Rate : 0.854                         
-    ##     P-Value [Acc > NIR] : 0.1318                        
+    ##     P-Value [Acc > NIR] : 0.1738                        
     ##                                                         
-    ##                   Kappa : 0.3293                        
+    ##                   Kappa : 0.2778                        
     ##                                                         
-    ##  Mcnemar's Test P-Value : 6.011e-06                     
+    ##  Mcnemar's Test P-Value : 6.577e-07                     
     ##                                                         
-    ##             Sensitivity : 0.25000                       
-    ##             Specificity : 0.98718                       
-    ##          Pos Pred Value : 0.76923                       
-    ##          Neg Pred Value : 0.88506                       
-    ##              Prevalence : 0.14599                       
-    ##          Detection Rate : 0.03650                       
-    ##    Detection Prevalence : 0.04745                       
-    ##       Balanced Accuracy : 0.61859                       
+    ##             Sensitivity : 0.2000                        
+    ##             Specificity : 0.9915                        
+    ##          Pos Pred Value : 0.8000                        
+    ##          Neg Pred Value : 0.8788                        
+    ##              Prevalence : 0.1460                        
+    ##          Detection Rate : 0.0292                        
+    ##    Detection Prevalence : 0.0365                        
+    ##       Balanced Accuracy : 0.5957                        
     ##                                                         
     ##        'Positive' Class : Female calls in recording O375
     ## 
@@ -545,22 +545,142 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## mean_pitch             0.7450
-    ## var_pitch              0.7414
-    ## mean_entropy           0.7189
-    ## mean_freq              0.7031
-    ## motif_duration         0.6981
-    ## diff_frm_mean          0.6981
-    ## mean_FM                0.6623
-    ## mean_pitchgoodness     0.6498
-    ## start                  0.6156
-    ## var_entropy            0.6089
-    ## var_AM                 0.5736
-    ## var_pitch_goodness     0.5724
-    ## var_FM                 0.5667
-    ## mean_AM2               0.5606
-    ## var_mean_freq          0.5187
-    ## mean_amplitude         0.5100
+    ## var_pitch              0.7312
+    ## mean_pitch             0.7233
+    ## diff_frm_mean          0.7188
+    ## motif_duration         0.7188
+    ## mean_entropy           0.6946
+    ## mean_freq              0.6930
+    ## mean_FM                0.6543
+    ## mean_pitchgoodness     0.6233
+    ## start                  0.6215
+    ## mean_AM2               0.6132
+    ## var_entropy            0.5893
+    ## var_FM                 0.5484
+    ## var_pitch_goodness     0.5448
+    ## var_AM                 0.5297
+    ## var_mean_freq          0.5172
+    ## mean_amplitude         0.5048
+
+# Running stats to see other variables are significantly different between two contexts.
+
+Mean pitch and mean entropy are two variables that ranked high for both
+birds. Running statistical tests to see if these mesures are different
+in different contexts.
+
+# Mean pitch
+
+``` r
+# Run anova
+anov <- aov(new_data$mean_pitch ~ new_data$contexts)
+# output summary
+summary(anov)
+```
+
+    ##                     Df    Sum Sq   Mean Sq F value Pr(>F)    
+    ## new_data$contexts    3 744561905 248187302    1540 <2e-16 ***
+    ## Residuals         1216 195953152    161146                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
+
+    ##   Tukey multiple comparisons of means
+    ##     95% family-wise confidence level
+    ## 
+    ## Fit: aov(formula = new_data$mean_pitch ~ new_data$contexts)
+    ## 
+    ## $`new_data$contexts`
+    ##                                                                       diff
+    ## Female calls in recording O375-Female calls in recording G544  2253.851819
+    ## Male singing alone O375-Female calls in recording G544         2635.299117
+    ## Undirected G544-Female calls in recording G544                    1.934807
+    ## Male singing alone O375-Female calls in recording O375          381.447298
+    ## Undirected G544-Female calls in recording O375                -2251.917012
+    ## Undirected G544-Male singing alone O375                       -2633.364309
+    ##                                                                      lwr
+    ## Female calls in recording O375-Female calls in recording G544  2085.3603
+    ## Male singing alone O375-Female calls in recording G544         2483.9644
+    ## Undirected G544-Female calls in recording G544                 -189.3180
+    ## Male singing alone O375-Female calls in recording O375          293.3497
+    ## Undirected G544-Female calls in recording O375                -2398.3295
+    ## Undirected G544-Male singing alone O375                       -2759.6553
+    ##                                                                      upr
+    ## Female calls in recording O375-Female calls in recording G544  2422.3434
+    ## Male singing alone O375-Female calls in recording G544         2786.6338
+    ## Undirected G544-Female calls in recording G544                  193.1876
+    ## Male singing alone O375-Female calls in recording O375          469.5449
+    ## Undirected G544-Female calls in recording O375                -2105.5045
+    ## Undirected G544-Male singing alone O375                       -2507.0733
+    ##                                                                   p adj
+    ## Female calls in recording O375-Female calls in recording G544 0.0000000
+    ## Male singing alone O375-Female calls in recording G544        0.0000000
+    ## Undirected G544-Female calls in recording G544                0.9999937
+    ## Male singing alone O375-Female calls in recording O375        0.0000000
+    ## Undirected G544-Female calls in recording O375                0.0000000
+    ## Undirected G544-Male singing alone O375                       0.0000000
+
+Mean pitch is differs with context for O375 but not for G544.
+
+# Mean entropy stats
+
+``` r
+# Run anova
+anov <- aov(new_data$mean_entropy ~ new_data$contexts)
+# output summary
+summary(anov)
+```
+
+    ##                     Df Sum Sq Mean Sq F value Pr(>F)    
+    ## new_data$contexts    3  1.955  0.6516   33.52 <2e-16 ***
+    ## Residuals         1216 23.637  0.0194                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Run tukey test for pairwise comparison
+TukeyHSD(anov)
+```
+
+    ##   Tukey multiple comparisons of means
+    ##     95% family-wise confidence level
+    ## 
+    ## Fit: aov(formula = new_data$mean_entropy ~ new_data$contexts)
+    ## 
+    ## $`new_data$contexts`
+    ##                                                                        diff
+    ## Female calls in recording O375-Female calls in recording G544  0.0332031943
+    ## Male singing alone O375-Female calls in recording G544        -0.0794106001
+    ## Undirected G544-Female calls in recording G544                -0.0799886621
+    ## Male singing alone O375-Female calls in recording O375        -0.1126137944
+    ## Undirected G544-Female calls in recording O375                -0.1131918565
+    ## Undirected G544-Male singing alone O375                       -0.0005780621
+    ##                                                                       lwr
+    ## Female calls in recording O375-Female calls in recording G544 -0.02531571
+    ## Male singing alone O375-Female calls in recording G544        -0.13197076
+    ## Undirected G544-Female calls in recording G544                -0.14641280
+    ## Male singing alone O375-Female calls in recording O375        -0.14321102
+    ## Undirected G544-Female calls in recording O375                -0.16404248
+    ## Undirected G544-Male singing alone O375                       -0.04444028
+    ##                                                                       upr
+    ## Female calls in recording O375-Female calls in recording G544  0.09172210
+    ## Male singing alone O375-Female calls in recording G544        -0.02685044
+    ## Undirected G544-Female calls in recording G544                -0.01356452
+    ## Male singing alone O375-Female calls in recording O375        -0.08201657
+    ## Undirected G544-Female calls in recording O375                -0.06234123
+    ## Undirected G544-Male singing alone O375                        0.04328415
+    ##                                                                   p adj
+    ## Female calls in recording O375-Female calls in recording G544 0.4623975
+    ## Male singing alone O375-Female calls in recording G544        0.0006187
+    ## Undirected G544-Female calls in recording G544                0.0107276
+    ## Male singing alone O375-Female calls in recording O375        0.0000000
+    ## Undirected G544-Female calls in recording O375                0.0000001
+    ## Undirected G544-Male singing alone O375                       0.9999860
+
+Mean entropy is differs with context for both birds.
 
 ``` r
 # plot scatter
@@ -596,26 +716,26 @@ knnFit
     ## Resampling results across tuning parameters:
     ## 
     ##   k   Accuracy   Kappa    
-    ##    5  0.8675452  0.3111238
-    ##    7  0.8675453  0.2795130
-    ##    9  0.8683680  0.2448495
-    ##   11  0.8723841  0.2416865
-    ##   13  0.8744020  0.2528649
-    ##   15  0.8715614  0.2372580
-    ##   17  0.8743923  0.2586343
-    ##   19  0.8735988  0.2507273
-    ##   21  0.8723890  0.2335797
-    ##   23  0.8703760  0.2131578
-    ##   25  0.8667273  0.1851089
-    ##   27  0.8663013  0.1837328
-    ##   29  0.8654981  0.1727854
-    ##   31  0.8650819  0.1592439
-    ##   33  0.8634754  0.1466112
-    ##   35  0.8618688  0.1251613
-    ##   37  0.8602429  0.1085607
-    ##   39  0.8602526  0.1078263
-    ##   41  0.8618690  0.1210187
-    ##   43  0.8610511  0.1096872
+    ##    5  0.8614626  0.2671999
+    ##    7  0.8654887  0.2726739
+    ##    9  0.8711503  0.2854835
+    ##   11  0.8719583  0.2731085
+    ##   13  0.8723697  0.2599753
+    ##   15  0.8711697  0.2413681
+    ##   17  0.8699405  0.2226111
+    ##   19  0.8679129  0.1968755
+    ##   21  0.8695389  0.2093376
+    ##   23  0.8687357  0.2013344
+    ##   25  0.8675211  0.1896025
+    ##   27  0.8687308  0.1959192
+    ##   29  0.8683292  0.1897267
+    ##   31  0.8683292  0.1928920
+    ##   33  0.8667177  0.1738992
+    ##   35  0.8659096  0.1658077
+    ##   37  0.8634804  0.1419833
+    ##   39  0.8638723  0.1433550
+    ##   41  0.8646901  0.1517963
+    ##   43  0.8634755  0.1335846
     ## 
     ## Accuracy was used to select the optimal model using the largest value.
     ## The final value used for the model was k = 13.
@@ -627,3 +747,90 @@ ggplot(knnFit, aes(x=k, y=Accuracy)) + ylim(0,1) + theme_classic()
 ![](Birdsong_analysis_files/figure-gfm/knnparametersplot-1.png)<!-- -->
 
 It doesn’t seem to matter which numbers we choose for neighbors.
+
+## PCA (Principal component analysis)
+
+Bird \#1 (G544)
+
+``` r
+length(birdsong1)
+```
+
+    ## [1] 28
+
+``` r
+bs2.pca <- prcomp(birdsong1[,2:12])
+
+
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong1, colour = 'contexts')
+pca.plot
+```
+
+![](Birdsong_analysis_files/figure-gfm/PCA1-1.png)<!-- -->
+
+Bird \#2 (O375)
+
+``` r
+length(birdsong2)
+```
+
+    ## [1] 28
+
+``` r
+bs2.pca <- prcomp(birdsong2[,2:12])
+
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong2, colour = 'context2')
+pca.plot
+```
+
+![](Birdsong_analysis_files/figure-gfm/PCA-1.png)<!-- -->
+
+## Exploring different plots
+
+``` r
+library(FactoMineR)
+library(factoextra)
+```
+
+    ## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+
+``` r
+new_birdsong1 <- birdsong1[,c(2:16,27:28)]
+bird1.pca <- PCA(new_birdsong1[,-17], graph = FALSE)
+
+fviz_pca_ind(bird1.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = new_birdsong1$contexts, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+             )
+```
+
+![](Birdsong_analysis_files/figure-gfm/PCAbird1_2-1.png)<!-- -->
+
+``` r
+new_birdsong2 <- birdsong2[,c(2:16,27:28)]
+
+bird2.pca <- PCA(new_birdsong2[,-17], graph = FALSE)
+
+fviz_pca_ind(bird2.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = new_birdsong2$contexts, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+)
+```
+
+![](Birdsong_analysis_files/figure-gfm/PCAbird2_2-1.png)<!-- -->
+
+## Conclusion 2
+
+Although the songs that are recorded in different contexts are
+statistically different in song length, It is hard to distinguish song
+types by just comparing the audio parameters. For more accuate analysis,
+we will need more recordings of actual direct songs (verified through
+behavioral analysis on video), which is time consuming.

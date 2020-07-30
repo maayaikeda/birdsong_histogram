@@ -162,14 +162,7 @@ p
 
 
 
-# number of variables
-length(birdsong2_filtered)
-bs2.pca <- prcomp(birdsong2_filtered[,2:12])
 
-bs2.pca
-library(ggfortify)
-pca.plot <- autoplot(bs2.pca, data = birdsong2_filtered, colour = 'context2')
-pca.plot
 
 
 n_rows <- nrow(new_data)
@@ -305,7 +298,37 @@ knnFit <- train(contexts ~ ., data = data.training, method = "knn", trControl = 
 #Output of kNN fit
 knnFit
 
+# PCA
+# number of variables
+length(birdsong2)
+bs2.pca <- prcomp(birdsong2[,2:12])
+
+bs2.pca
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong2, colour = 'contexts')
+pca.plot
+
+length(birdsong1)
+bs2.pca <- prcomp(birdsong1[,2:12])
+
+bs2.pca
+library(ggfortify)
+pca.plot <- autoplot(bs2.pca, data = birdsong1, colour = 'contexts')
+pca.plot
+
+new_birdsong1 <- birdsong1[,c(2:16,27:28)]
 
 
+library(FactoMineR)
+
+bird1.pca <- PCA(new_birdsong1[,-17], graph = FALSE)
+
+fviz_pca_ind(bird1.pca,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = bird1$contexts, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+)
 
 
