@@ -394,5 +394,12 @@ knnFit
 
 
 
+```{r knnparametersplot}
 
+ggplot(knnFit, aes(x=k, y=Accuracy)) + ylim(0,1) + theme_classic()
+
+
+```
+
+It doesn't seem to matter which numbers we choose for neighbors.
 

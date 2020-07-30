@@ -402,26 +402,26 @@ confusionMatrix(predictions,resultstest)
     ## 
     ##                                 Reference
     ## Prediction                       Female calls in recording G544 Undirected G544
-    ##   Female calls in recording G544                              8               0
-    ##   Undirected G544                                             4              18
+    ##   Female calls in recording G544                              8               1
+    ##   Undirected G544                                             4              17
     ##                                                         
-    ##                Accuracy : 0.8667                        
-    ##                  95% CI : (0.6928, 0.9624)              
+    ##                Accuracy : 0.8333                        
+    ##                  95% CI : (0.6528, 0.9436)              
     ##     No Information Rate : 0.6                           
-    ##     P-Value [Acc > NIR] : 0.00151                       
+    ##     P-Value [Acc > NIR] : 0.005659                      
     ##                                                         
-    ##                   Kappa : 0.7059                        
+    ##                   Kappa : 0.6377                        
     ##                                                         
-    ##  Mcnemar's Test P-Value : 0.13361                       
+    ##  Mcnemar's Test P-Value : 0.371093                      
     ##                                                         
     ##             Sensitivity : 0.6667                        
-    ##             Specificity : 1.0000                        
-    ##          Pos Pred Value : 1.0000                        
-    ##          Neg Pred Value : 0.8182                        
+    ##             Specificity : 0.9444                        
+    ##          Pos Pred Value : 0.8889                        
+    ##          Neg Pred Value : 0.8095                        
     ##              Prevalence : 0.4000                        
     ##          Detection Rate : 0.2667                        
-    ##    Detection Prevalence : 0.2667                        
-    ##       Balanced Accuracy : 0.8333                        
+    ##    Detection Prevalence : 0.3000                        
+    ##       Balanced Accuracy : 0.8056                        
     ##                                                         
     ##        'Positive' Class : Female calls in recording G544
     ## 
@@ -437,22 +437,22 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## start                  0.9364
-    ## diff_frm_mean          0.8859
-    ## motif_duration         0.8859
-    ## mean_entropy           0.6584
-    ## mean_AM2               0.5696
-    ## mean_amplitude         0.5688
-    ## var_pitch_goodness     0.5631
-    ## mean_FM                0.5603
-    ## var_FM                 0.5551
-    ## mean_pitch             0.5543
-    ## var_entropy            0.5501
-    ## var_pitch              0.5440
-    ## var_mean_freq          0.5305
-    ## var_AM                 0.5285
-    ## mean_freq              0.5110
-    ## mean_pitchgoodness     0.5050
+    ## start                  0.9294
+    ## motif_duration         0.8571
+    ## diff_frm_mean          0.8571
+    ## mean_entropy           0.6474
+    ## mean_FM                0.6176
+    ## mean_pitchgoodness     0.5548
+    ## mean_pitch             0.5501
+    ## mean_freq              0.5483
+    ## var_FM                 0.5410
+    ## var_pitch_goodness     0.5325
+    ## mean_AM2               0.5260
+    ## var_mean_freq          0.5218
+    ## var_pitch              0.5205
+    ## mean_amplitude         0.5150
+    ## var_entropy            0.5145
+    ## var_AM                 0.5083
 
 As expected, motif duration is the most important variable other than
 start time. Mean entropy is also expected to be different between the
@@ -513,26 +513,26 @@ confusionMatrix(predictions,resultstest)
     ##   Male singing alone O375                                    30
     ##                                 Reference
     ## Prediction                       Male singing alone O375
-    ##   Female calls in recording O375                       6
-    ##   Male singing alone O375                            228
+    ##   Female calls in recording O375                       3
+    ##   Male singing alone O375                            231
     ##                                                         
-    ##                Accuracy : 0.8686                        
-    ##                  95% CI : (0.8228, 0.9063)              
+    ##                Accuracy : 0.8796                        
+    ##                  95% CI : (0.835, 0.9156)               
     ##     No Information Rate : 0.854                         
-    ##     P-Value [Acc > NIR] : 0.2790512                     
+    ##     P-Value [Acc > NIR] : 0.1318                        
     ##                                                         
-    ##                   Kappa : 0.2986                        
+    ##                   Kappa : 0.3293                        
     ##                                                         
-    ##  Mcnemar's Test P-Value : 0.0001264                     
+    ##  Mcnemar's Test P-Value : 6.011e-06                     
     ##                                                         
     ##             Sensitivity : 0.25000                       
-    ##             Specificity : 0.97436                       
-    ##          Pos Pred Value : 0.62500                       
-    ##          Neg Pred Value : 0.88372                       
+    ##             Specificity : 0.98718                       
+    ##          Pos Pred Value : 0.76923                       
+    ##          Neg Pred Value : 0.88506                       
     ##              Prevalence : 0.14599                       
     ##          Detection Rate : 0.03650                       
-    ##    Detection Prevalence : 0.05839                       
-    ##       Balanced Accuracy : 0.61218                       
+    ##    Detection Prevalence : 0.04745                       
+    ##       Balanced Accuracy : 0.61859                       
     ##                                                         
     ##        'Positive' Class : Female calls in recording O375
     ## 
@@ -545,22 +545,22 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## var_pitch              0.7396
-    ## mean_pitch             0.7385
-    ## mean_entropy           0.7301
-    ## diff_frm_mean          0.7254
-    ## motif_duration         0.7254
-    ## mean_freq              0.6968
-    ## mean_FM                0.6599
-    ## start                  0.6509
-    ## var_entropy            0.6435
-    ## mean_pitchgoodness     0.6236
-    ## mean_AM2               0.5905
-    ## var_FM                 0.5796
-    ## var_AM                 0.5770
-    ## mean_amplitude         0.5434
-    ## var_pitch_goodness     0.5362
-    ## var_mean_freq          0.5191
+    ## mean_pitch             0.7450
+    ## var_pitch              0.7414
+    ## mean_entropy           0.7189
+    ## mean_freq              0.7031
+    ## motif_duration         0.6981
+    ## diff_frm_mean          0.6981
+    ## mean_FM                0.6623
+    ## mean_pitchgoodness     0.6498
+    ## start                  0.6156
+    ## var_entropy            0.6089
+    ## var_AM                 0.5736
+    ## var_pitch_goodness     0.5724
+    ## var_FM                 0.5667
+    ## mean_AM2               0.5606
+    ## var_mean_freq          0.5187
+    ## mean_amplitude         0.5100
 
 ``` r
 # plot scatter
@@ -596,26 +596,34 @@ knnFit
     ## Resampling results across tuning parameters:
     ## 
     ##   k   Accuracy   Kappa    
-    ##    5  0.8678931  0.3166127
-    ##    7  0.8739856  0.3298714
-    ##    9  0.8752002  0.3215701
-    ##   11  0.8752050  0.3172134
-    ##   13  0.8687352  0.2639186
-    ##   15  0.8687304  0.2561074
-    ##   17  0.8719581  0.2620352
-    ##   19  0.8739760  0.2682446
-    ##   21  0.8743824  0.2663855
-    ##   23  0.8747840  0.2689027
-    ##   25  0.8755873  0.2694413
-    ##   27  0.8747744  0.2659874
-    ##   29  0.8739711  0.2595351
-    ##   31  0.8731630  0.2517275
-    ##   33  0.8691029  0.2211056
-    ##   35  0.8695143  0.2216859
-    ##   37  0.8695045  0.2211877
-    ##   39  0.8695094  0.2184148
-    ##   41  0.8699110  0.2212034
-    ##   43  0.8695045  0.2137866
+    ##    5  0.8675452  0.3111238
+    ##    7  0.8675453  0.2795130
+    ##    9  0.8683680  0.2448495
+    ##   11  0.8723841  0.2416865
+    ##   13  0.8744020  0.2528649
+    ##   15  0.8715614  0.2372580
+    ##   17  0.8743923  0.2586343
+    ##   19  0.8735988  0.2507273
+    ##   21  0.8723890  0.2335797
+    ##   23  0.8703760  0.2131578
+    ##   25  0.8667273  0.1851089
+    ##   27  0.8663013  0.1837328
+    ##   29  0.8654981  0.1727854
+    ##   31  0.8650819  0.1592439
+    ##   33  0.8634754  0.1466112
+    ##   35  0.8618688  0.1251613
+    ##   37  0.8602429  0.1085607
+    ##   39  0.8602526  0.1078263
+    ##   41  0.8618690  0.1210187
+    ##   43  0.8610511  0.1096872
     ## 
     ## Accuracy was used to select the optimal model using the largest value.
-    ## The final value used for the model was k = 25.
+    ## The final value used for the model was k = 13.
+
+``` r
+ggplot(knnFit, aes(x=k, y=Accuracy)) + ylim(0,1) + theme_classic()
+```
+
+![](Birdsong_analysis_files/figure-gfm/knnparametersplot-1.png)<!-- -->
+
+It doesn’t seem to matter which numbers we choose for neighbors.
