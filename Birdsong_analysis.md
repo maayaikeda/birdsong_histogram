@@ -363,10 +363,13 @@ This suggest that we presence of female call contamination could be a
 way to sort undirected vs. directed songs when visual analysis of
 behavior cannot be done.
 
-## Using Machine learning algorithm
+# Using Machine learning algorithm
 
-Using Machine learning algorithm to see how different are the songs
-during different contexts for each bird.
+Using Machine learning algorithm to 1. see how different are the songs
+during different contexts for each bird. 2. find out what other
+variables are different between contexts.
+
+### Set up data
 
 ``` r
 library(caret)
@@ -386,7 +389,7 @@ data.test <- birdsong1[-index,c(2:16,27,28)]
 data.test <- as.data.frame(data.test )
 ```
 
-Using KNN model to start.
+### Train and run KNN model.
 
 ``` r
 # Train model
@@ -426,6 +429,8 @@ confusionMatrix(predictions,resultstest)
     ##        'Positive' Class : Female calls in recording G544
     ## 
 
+### Variable importance
+
 Looking at which variables contributed the most. We expect motif
 duration to be ranked high.
 
@@ -437,29 +442,29 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## start                  0.9394
-    ## motif_duration         0.8641
-    ## diff_frm_mean          0.8641
-    ## mean_entropy           0.6481
-    ## mean_pitch             0.5973
-    ## var_FM                 0.5843
-    ## mean_FM                0.5731
-    ## var_pitch_goodness     0.5686
-    ## mean_pitchgoodness     0.5395
-    ## mean_AM2               0.5335
-    ## mean_amplitude         0.5300
-    ## var_entropy            0.5300
-    ## mean_freq              0.5300
-    ## var_AM                 0.5265
-    ## var_pitch              0.5245
-    ## var_mean_freq          0.5070
+    ## start                  0.9369
+    ## diff_frm_mean          0.8834
+    ## motif_duration         0.8834
+    ## mean_entropy           0.6847
+    ## mean_pitch             0.6094
+    ## mean_FM                0.5856
+    ## var_FM                 0.5581
+    ## var_entropy            0.5480
+    ## mean_amplitude         0.5408
+    ## var_mean_freq          0.5165
+    ## mean_freq              0.5153
+    ## var_pitch_goodness     0.5130
+    ## mean_AM2               0.5110
+    ## mean_pitchgoodness     0.5105
+    ## var_pitch              0.5103
+    ## var_AM                 0.5060
 
 As expected, motif duration is the most important variable other than
 start time. Mean entropy is also expected to be different between the
 two groups because isolated recordings are clean while recordings while
 females are calling are messy (less clean) by definition.
 
-## Plot data
+### Plot data
 
 Plot data to see how well the top two variables separate out the two
 contexts.
@@ -475,7 +480,7 @@ p
 
 ![](Birdsong_analysis_files/figure-gfm/scatterplot-1.png)<!-- -->
 
-## Repeat for Bird \#2
+### Repeat for Bird \#2
 
 ``` r
 birdsong2 <- subset(new_data, birdID == "O375")
@@ -493,7 +498,7 @@ data.test <- birdsong2[-index,c(2:16,27,28)]
 data.test <- as.data.frame(data.test )
 ```
 
-Using KNN model to start.
+Using KNN model.
 
 ``` r
 # Train model
@@ -509,33 +514,35 @@ confusionMatrix(predictions,resultstest)
     ## 
     ##                                 Reference
     ## Prediction                       Female calls in recording O375
-    ##   Female calls in recording O375                              8
-    ##   Male singing alone O375                                    32
+    ##   Female calls in recording O375                             11
+    ##   Male singing alone O375                                    29
     ##                                 Reference
     ## Prediction                       Male singing alone O375
     ##   Female calls in recording O375                       2
     ##   Male singing alone O375                            232
     ##                                                         
-    ##                Accuracy : 0.8759                        
-    ##                  95% CI : (0.8309, 0.9125)              
+    ##                Accuracy : 0.8869                        
+    ##                  95% CI : (0.8433, 0.9218)              
     ##     No Information Rate : 0.854                         
-    ##     P-Value [Acc > NIR] : 0.1738                        
+    ##     P-Value [Acc > NIR] : 0.06941                       
     ##                                                         
-    ##                   Kappa : 0.2778                        
+    ##                   Kappa : 0.37                          
     ##                                                         
-    ##  Mcnemar's Test P-Value : 6.577e-07                     
+    ##  Mcnemar's Test P-Value : 3.016e-06                     
     ##                                                         
-    ##             Sensitivity : 0.2000                        
-    ##             Specificity : 0.9915                        
-    ##          Pos Pred Value : 0.8000                        
-    ##          Neg Pred Value : 0.8788                        
-    ##              Prevalence : 0.1460                        
-    ##          Detection Rate : 0.0292                        
-    ##    Detection Prevalence : 0.0365                        
-    ##       Balanced Accuracy : 0.5957                        
+    ##             Sensitivity : 0.27500                       
+    ##             Specificity : 0.99145                       
+    ##          Pos Pred Value : 0.84615                       
+    ##          Neg Pred Value : 0.88889                       
+    ##              Prevalence : 0.14599                       
+    ##          Detection Rate : 0.04015                       
+    ##    Detection Prevalence : 0.04745                       
+    ##       Balanced Accuracy : 0.63323                       
     ##                                                         
     ##        'Positive' Class : Female calls in recording O375
     ## 
+
+### Variable importance for bird \#2
 
 ``` r
 importance <- varImp(model_knn, scale=FALSE)
@@ -545,30 +552,43 @@ print(importance)
     ## ROC curve variable importance
     ## 
     ##                    Importance
-    ## var_pitch              0.7312
-    ## mean_pitch             0.7233
-    ## diff_frm_mean          0.7188
-    ## motif_duration         0.7188
-    ## mean_entropy           0.6946
-    ## mean_freq              0.6930
-    ## mean_FM                0.6543
-    ## mean_pitchgoodness     0.6233
-    ## start                  0.6215
-    ## mean_AM2               0.6132
-    ## var_entropy            0.5893
-    ## var_FM                 0.5484
-    ## var_pitch_goodness     0.5448
-    ## var_AM                 0.5297
-    ## var_mean_freq          0.5172
-    ## mean_amplitude         0.5048
+    ## diff_frm_mean          0.7204
+    ## motif_duration         0.7204
+    ## var_pitch              0.7177
+    ## mean_pitch             0.7162
+    ## mean_entropy           0.6991
+    ## mean_freq              0.6864
+    ## mean_FM                0.6563
+    ## start                  0.6444
+    ## mean_pitchgoodness     0.6380
+    ## var_entropy            0.6039
+    ## mean_AM2               0.5725
+    ## var_FM                 0.5649
+    ## var_pitch_goodness     0.5596
+    ## var_AM                 0.5391
+    ## var_mean_freq          0.5370
+    ## mean_amplitude         0.5148
 
-# Running stats to see other variables are significantly different between two contexts.
+## Plot bird 2
+
+``` r
+# plot scatter
+
+p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+```
+
+![](Birdsong_analysis_files/figure-gfm/scatterplotb2-1.png)<!-- -->
+
+## Running stats to see other variables are significantly different between two contexts.
 
 Mean pitch and mean entropy are two variables that ranked high for both
 birds. Running statistical tests to see if these mesures are different
 in different contexts.
 
-# Mean pitch
+### Mean pitch
 
 ``` r
 # Run anova
@@ -625,7 +645,7 @@ TukeyHSD(anov)
 
 Mean pitch is differs with context for O375 but not for G544.
 
-# Mean entropy stats
+### Mean entropy stats
 
 ``` r
 # Run anova
@@ -682,17 +702,6 @@ TukeyHSD(anov)
 
 Mean entropy is differs with context for both birds.
 
-``` r
-# plot scatter
-
-p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
-p <- p + geom_point()
-p <- p +  theme_classic()
-p
-```
-
-![](Birdsong_analysis_files/figure-gfm/scatterplotb2-1.png)<!-- -->
-
 Just looking at how the accuracy changes with different k values.
 
 ``` r
@@ -716,29 +725,31 @@ knnFit
     ## Resampling results across tuning parameters:
     ## 
     ##   k   Accuracy   Kappa    
-    ##    5  0.8614626  0.2671999
-    ##    7  0.8654887  0.2726739
-    ##    9  0.8711503  0.2854835
-    ##   11  0.8719583  0.2731085
-    ##   13  0.8723697  0.2599753
-    ##   15  0.8711697  0.2413681
-    ##   17  0.8699405  0.2226111
-    ##   19  0.8679129  0.1968755
-    ##   21  0.8695389  0.2093376
-    ##   23  0.8687357  0.2013344
-    ##   25  0.8675211  0.1896025
-    ##   27  0.8687308  0.1959192
-    ##   29  0.8683292  0.1897267
-    ##   31  0.8683292  0.1928920
-    ##   33  0.8667177  0.1738992
-    ##   35  0.8659096  0.1658077
-    ##   37  0.8634804  0.1419833
-    ##   39  0.8638723  0.1433550
-    ##   41  0.8646901  0.1517963
-    ##   43  0.8634755  0.1335846
+    ##    5  0.8678640  0.2961444
+    ##    7  0.8763955  0.3202761
+    ##    9  0.8784181  0.3159664
+    ##   11  0.8768069  0.2871440
+    ##   13  0.8768020  0.2833154
+    ##   15  0.8743581  0.2604346
+    ##   17  0.8727369  0.2478508
+    ##   19  0.8719337  0.2382095
+    ##   21  0.8727273  0.2404710
+    ##   23  0.8739419  0.2454084
+    ##   25  0.8739419  0.2424052
+    ##   27  0.8723306  0.2283040
+    ##   29  0.8699013  0.2098597
+    ##   31  0.8678835  0.1912041
+    ##   33  0.8666835  0.1799411
+    ##   35  0.8650574  0.1673602
+    ##   37  0.8646557  0.1584554
+    ##   39  0.8646557  0.1583129
+    ##   41  0.8630395  0.1429604
+    ##   43  0.8638476  0.1472019
     ## 
     ## Accuracy was used to select the optimal model using the largest value.
-    ## The final value used for the model was k = 13.
+    ## The final value used for the model was k = 9.
+
+Plot the result.
 
 ``` r
 ggplot(knnFit, aes(x=k, y=Accuracy)) + ylim(0,1) + theme_classic()
@@ -750,13 +761,9 @@ It doesn’t seem to matter which numbers we choose for neighbors.
 
 ## PCA (Principal component analysis)
 
-Bird \#1 (G544)
+Will demention reduction separate out the songs from different contexts?
 
-``` r
-length(birdsong1)
-```
-
-    ## [1] 28
+### Bird \#1 (G544)
 
 ``` r
 bs2.pca <- prcomp(birdsong1[,2:12])
@@ -769,13 +776,7 @@ pca.plot
 
 ![](Birdsong_analysis_files/figure-gfm/PCA1-1.png)<!-- -->
 
-Bird \#2 (O375)
-
-``` r
-length(birdsong2)
-```
-
-    ## [1] 28
+### Bird \#2 (O375)
 
 ``` r
 bs2.pca <- prcomp(birdsong2[,2:12])
@@ -788,6 +789,8 @@ pca.plot
 ![](Birdsong_analysis_files/figure-gfm/PCA-1.png)<!-- -->
 
 ## Exploring different plots
+
+### Bird 1
 
 ``` r
 library(FactoMineR)
@@ -810,6 +813,8 @@ fviz_pca_ind(bird1.pca,
 ```
 
 ![](Birdsong_analysis_files/figure-gfm/PCAbird1_2-1.png)<!-- -->
+
+### Bird 2
 
 ``` r
 new_birdsong2 <- birdsong2[,c(2:16,27:28)]

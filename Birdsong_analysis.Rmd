@@ -256,11 +256,13 @@ As expected, songs with and without female calls in the background are significa
 
 This suggest that we presence of female call contamination could be a way to sort undirected vs. directed songs when visual analysis of behavior cannot be done. 
 
-## Using Machine learning algorithm
+# Using Machine learning algorithm
 
+Using Machine learning algorithm to 
+1. see how different are the songs during different contexts for each bird.
+2. find out what other variables are different between contexts.
 
-Using Machine learning algorithm to see how different are the songs during different contexts for each bird. 
-
+### Set up data
 ```{r dataforknn}
 library(caret)
 library(e1071)
@@ -279,7 +281,7 @@ data.test <- birdsong1[-index,c(2:16,27,28)]
 data.test <- as.data.frame(data.test )
 ```
 
-Using KNN model.
+### Train and run KNN model.
 
 ```{r knnmodel}
 
@@ -294,6 +296,7 @@ confusionMatrix(predictions,resultstest)
 
 ```
 
+### Variable importance 
 
 Looking at which variables contributed the most. We expect motif duration to be ranked high.
 
@@ -305,7 +308,7 @@ print(importance)
 
 As expected, motif duration is the most important variable other than start time. Mean entropy is also expected to be different  between the two groups because isolated recordings are clean while recordings while females are calling are messy (less clean) by definition.
 
-## Plot data
+### Plot data
 
 
 Plot data to see how well the top two variables separate out the two contexts.
@@ -321,7 +324,7 @@ p
 
 ```
 
-## Repeat for Bird #2
+### Repeat for Bird #2
 
 ```{r dataforknnb2}
 
@@ -340,7 +343,7 @@ data.test <- birdsong2[-index,c(2:16,27,28)]
 data.test <- as.data.frame(data.test )
 ```
 
-Using KNN model to start.
+Using KNN model.
 
 ```{r knnmodelb2}
 
@@ -354,14 +357,14 @@ confusionMatrix(predictions,resultstest)
 
 
 ```
-
+### Variable importance for bird #2
 ```{r importanceb2}
 
 importance <- varImp(model_knn, scale=FALSE)
 print(importance)
 ```
 
-Plot bird 2
+## Plot bird 2
 ```{r scatterplotb2}
 
 # plot scatter
@@ -374,11 +377,11 @@ p
 ```
 
 
-# Running stats to see other variables are significantly different between two contexts.
+## Running stats to see other variables are significantly different between two contexts.
 
 Mean pitch and mean entropy are two variables that ranked high for both birds. Running statistical tests to see if these mesures are different in different contexts.
 
-# Mean pitch
+### Mean pitch
 ```{r birdstats2}
 # Run anova
 anov <- aov(new_data$mean_pitch ~ new_data$contexts)
@@ -389,7 +392,7 @@ TukeyHSD(anov)
 ```
 Mean pitch is differs with context for O375 but not for G544. 
 
-# Mean entropy stats
+### Mean entropy stats
 ```{r birdstats3}
 # Run anova
 anov <- aov(new_data$mean_entropy ~ new_data$contexts)
@@ -429,7 +432,9 @@ It doesn't seem to matter which numbers we choose for neighbors.
 
 ## PCA (Principal component analysis)
 
-Bird #1 (G544)
+Will demention reduction separate out the songs from different contexts?
+
+### Bird #1 (G544)
 ```{r PCA1}
 
 bs2.pca <- prcomp(birdsong1[,2:12])
@@ -443,7 +448,7 @@ pca.plot
 
 
 
-Bird #2 (O375)
+### Bird #2 (O375)
 ```{r PCA}
 
 bs2.pca <- prcomp(birdsong2[,2:12])
@@ -456,7 +461,7 @@ pca.plot
 
 ## Exploring different plots
 
-
+### Bird 1
 ```{r PCAbird1_2}
 library(FactoMineR)
 library(factoextra)
@@ -476,6 +481,7 @@ fviz_pca_ind(bird1.pca,
 
 
 
+### Bird 2
 
 ```{r PCAbird2_2}
 new_birdsong2 <- birdsong2[,c(2:16,27:28)]
