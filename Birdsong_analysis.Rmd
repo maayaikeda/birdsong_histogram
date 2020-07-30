@@ -279,7 +279,7 @@ data.test <- birdsong1[-index,c(2:16,27,28)]
 data.test <- as.data.frame(data.test )
 ```
 
-Using KNN model to start.
+Using KNN model.
 
 ```{r knnmodel}
 
@@ -361,7 +361,17 @@ importance <- varImp(model_knn, scale=FALSE)
 print(importance)
 ```
 
+Plot bird 2
+```{r scatterplotb2}
 
+# plot scatter
+
+p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
+p <- p + geom_point()
+p <- p +  theme_classic()
+p
+
+```
 
 
 # Running stats to see other variables are significantly different between two contexts.
@@ -390,18 +400,6 @@ TukeyHSD(anov)
 ```
 Mean entropy is differs with context for both birds. 
 
-```{r scatterplotb2}
-
-
-# plot scatter
-
-p <- ggplot(birdsong2, aes(x = motif_duration, y = mean_entropy, color=contexts, alpha=0.5))
-p <- p + geom_point()
-p <- p +  theme_classic()
-p
-
-```
-
 
 
 Just looking at how the accuracy changes with different k values.
@@ -417,7 +415,7 @@ knnFit
 
 ```
 
-
+Plot the result.
 
 
 ```{r knnparametersplot}
@@ -434,7 +432,6 @@ It doesn't seem to matter which numbers we choose for neighbors.
 Bird #1 (G544)
 ```{r PCA1}
 
-length(birdsong1)
 bs2.pca <- prcomp(birdsong1[,2:12])
 
 
@@ -446,11 +443,9 @@ pca.plot
 
 
 
-
-
 Bird #2 (O375)
 ```{r PCA}
-length(birdsong2)
+
 bs2.pca <- prcomp(birdsong2[,2:12])
 
 library(ggfortify)
